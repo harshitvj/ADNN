@@ -1,6 +1,8 @@
 import tensorflow as tf
 import numpy as np
 import os
+import  pandas as  pd
+from main import data
 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -13,8 +15,8 @@ hidden1_layer_nodes = 500
 hidden2_layer_nodes = 500
 output_layer_nodes = 10
 
-x_data = np.zeros([5000, 1000])
-y_data = np.zeros([5000, 10])
+x_data = data.iloc[:,:-4].values
+y_data = data.iloc[:,-4:].values
 
 X = tf.placeholder(tf.float32)
 Y = tf.placeholder(tf.float32)
