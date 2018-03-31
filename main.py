@@ -9,6 +9,8 @@ import os
 import  pandas as pd
 
 
+np.set_printoptions(threshold=np.inf)
+
 lastTime = time.time()
 frame = 0
 
@@ -20,6 +22,8 @@ if os.path.isfile(filename):
 else:
     print("File doesn't exist, creating new file")
     training_data = np.array([])
+
+data = pd.DataFrame()
 
 while True:
     if time.time() - lastTime > 1:
@@ -42,8 +46,7 @@ while True:
     #     file1.write(str(output))
     #     file1.write("\n")
 
-    data = pd.DataFrame()
-    dfx= pd.DataFrame(data_vector)
+    dfx = pd.DataFrame(data_vector)
     dfy = pd.DataFrame(output)
     dfz = pd.concat([dfx,dfy])
     data = pd.concat([data,dfz], axis=1)
@@ -55,5 +58,4 @@ while True:
         cv2.destroyAllWindows()
         break
 
-data = data.reset_index(drop=True)
-data = data.T.reset_index(drop = True).T
+data.to_csv('data.csv')

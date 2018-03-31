@@ -2,7 +2,6 @@ import tensorflow as tf
 import numpy as np
 import os
 import  pandas as  pd
-from main import data
 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -10,11 +9,15 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 epochs = 100
 learning_rate = 0.01
 
-input_layer_nodes = 1000
+input_layer_nodes = 2208
 hidden1_layer_nodes = 500
 hidden2_layer_nodes = 500
-output_layer_nodes = 10
+output_layer_nodes = 4
 
+data = pd.read_csv('data.csv',index_col=0)
+data = data.astype('int32')
+data = data.reset_index(drop=True)
+data = data.T.reset_index(drop = True)
 x_data = data.iloc[:,:-4].values
 y_data = data.iloc[:,-4:].values
 
@@ -49,4 +52,3 @@ with tf.Session() as sess:
             answer = tf.equal(tf.floor(taklu[0] + 0.5), taklu[1])
             accuracy = tf.reduce_mean(tf.cast(answer, tf.float32))
             print(sess.run(accuracy, feed_dict={X: x_data, Y: y_data})*100)
-
