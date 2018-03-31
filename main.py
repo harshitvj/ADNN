@@ -14,14 +14,14 @@ np.set_printoptions(threshold=np.inf)
 lastTime = time.time()
 frame = 0
 
-filename = 'training_data.npy'
-
-if os.path.isfile(filename):
-    print("Loading previous file..")
-    training_data = np.array(np.load(filename))
-else:
-    print("File doesn't exist, creating new file")
-    training_data = np.array([])
+# filename = 'training_data.npy'
+#
+# if os.path.isfile(filename):
+#     print("Loading previous file..")
+#     training_data = np.array(np.load(filename))
+# else:
+#     print("File doesn't exist, creating new file")
+#     training_data = np.array([])
 
 data = pd.DataFrame()
 
@@ -58,4 +58,4 @@ while True:
         cv2.destroyAllWindows()
         break
 
-data.to_csv('data.csv')
+data.T.to_csv('data.csv',mode='a',header=False)

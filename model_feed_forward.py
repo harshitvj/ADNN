@@ -17,7 +17,7 @@ output_layer_nodes = 4
 data = pd.read_csv('data.csv',index_col=0)
 data = data.astype('int32')
 data = data.reset_index(drop=True)
-data = data.T.reset_index(drop = True)
+data = data.T.reset_index(drop = True).T
 x_data = data.iloc[:,:-4].values
 y_data = data.iloc[:,-4:].values
 
