@@ -6,6 +6,7 @@ import time
 from roi import roi
 from getkeys import key_check, keys_to_output
 import os
+import  pandas as pd
 
 
 lastTime = time.time()
@@ -41,6 +42,11 @@ while True:
     #     file1.write(str(output))
     #     file1.write("\n")
 
+    data = pd.DataFrame()
+    dfx= pd.DataFrame(data_vector)
+    dfy = pd.DataFrame(output)
+    dfz = pd.concat([dfx,dfy])
+    data = pd.concat([data,dfz], axis=1)
 
     cv2.imshow('Lanes', cropped_image)
 
@@ -48,3 +54,6 @@ while True:
     if cv2.waitKey(50) & 0xFF == ord('q'):
         cv2.destroyAllWindows()
         break
+
+data = data.reset_index(drop=True)
+data = data.T.reset_index(drop = True).T
