@@ -12,7 +12,7 @@ learning_rate = 0.01
 input_layer_nodes = 2208
 hidden1_layer_nodes = 500
 hidden2_layer_nodes = 500
-output_layer_nodes = 4
+output_layer_nodes = 8
 
 # Read data from CSV file to DataFrame variable and convert its dtype to int32
 data = pd.read_csv('data.csv',index_col=0)
@@ -21,8 +21,8 @@ data = data.reset_index(drop=True)
 data = data.T.reset_index(drop = True).T
 
 # Convert DataFrame "data" to numpy matrix and store x_data and y_data separately
-x_data = data.iloc[:,:-4].values
-y_data = data.iloc[:,-4:].values
+x_data = data.iloc[:,:-8].values
+y_data = data.iloc[:,-8:].values
 
 X = tf.placeholder(tf.float32)
 Y = tf.placeholder(tf.float32)
