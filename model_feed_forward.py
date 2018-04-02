@@ -14,10 +14,13 @@ hidden1_layer_nodes = 500
 hidden2_layer_nodes = 500
 output_layer_nodes = 4
 
+# Read data from CSV file to DataFrame variable and convert its dtype to int32
 data = pd.read_csv('data.csv',index_col=0)
 data = data.astype('int32')
 data = data.reset_index(drop=True)
 data = data.T.reset_index(drop = True).T
+
+# Convert DataFrame "data" to numpy matrix and store x_data and y_data separately
 x_data = data.iloc[:,:-4].values
 y_data = data.iloc[:,-4:].values
 
@@ -42,6 +45,7 @@ cost = tf.reduce_mean(term1 + term2)
 
 optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
 init_var = tf.global_variables_initializer()
+
 with tf.Session() as sess:
     sess.run(init_var)
     for i in range(epochs):
