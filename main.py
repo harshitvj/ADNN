@@ -9,8 +9,6 @@ import os
 import  pandas as pd
 
 
-np.set_printoptions(threshold=np.inf)
-
 lastTime = time.time()
 frame = 0
 
