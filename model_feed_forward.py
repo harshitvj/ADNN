@@ -51,7 +51,7 @@ with tf.Session() as sess:
         sess.run(optimizer, feed_dict={X: x_data, Y: y_data})
         if i % 10 == 0:
             print(sess.run(cost, feed_dict={X: x_data, Y: y_data}))
-            taklu = sess.run([hypothesis, Y], feed_dict={X: x_data, Y: y_data})
-            answer = tf.equal(tf.floor(taklu[0] + 0.5), taklu[1])
+            temp = sess.run([hypothesis, Y], feed_dict={X: x_data, Y: y_data})
+            answer = tf.equal(tf.floor(temp[0] + 0.5), temp[1])
             accuracy = tf.reduce_mean(tf.cast(answer, tf.float32))
             print(sess.run(accuracy, feed_dict={X: x_data, Y: y_data})*100)
