@@ -1,6 +1,6 @@
 import tensorflow as tf
 import os
-import  pandas as  pd
+import pandas as pd
 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
