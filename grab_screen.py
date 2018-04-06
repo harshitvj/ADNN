@@ -1,6 +1,7 @@
-# Done by Frannecklp
+# Done by Frannecklp, modified a little.
 
 import cv2
+from roi import roi
 import numpy as np
 import win32gui
 import win32ui
@@ -39,3 +40,14 @@ def grab_screen(region=None):
     win32gui.DeleteObject(bmp.GetHandle())
 
     return cv2.cvtColor(img, cv2.COLOR_BGRA2RGB)
+
+
+def process_image():
+    # grabbed_image = np.array(ImageGrab.grab(bbox=(0, 250, 960, 480)))
+    grabbed_image = grab_screen(region=(0, 250, 960, 480))
+    gray_image = cv2.cvtColor(grabbed_image, cv2.COLOR_BGR2GRAY)
+    cropped_image = np.array(roi(gray_image))
+    # screen = process_image(grabbed_image)
+    # lines = cv2.HoughLinesP(screen, 1, np.pi/180, 100, None, minLineLength=150, maxLineGap=0)
+    # screen = show_lines(cv2.cvtColor(grabbed_image,cv2.COLOR_BGR2RGB), lines)
+    return np.array(cv2.resize(cropped_image, (96, 23)))
