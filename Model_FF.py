@@ -1,38 +1,30 @@
 import tensorflow as tf
-import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.utils import shuffle
 import matplotlib.pyplot as plt
 
 
 # Defining Parameters
-total_epochs = 50
+total_epochs = 500
 learning_rate = 0.06
 
 input_layer_nodes = 2208
 hidden1_layer_nodes = 500
 hidden2_layer_nodes = 500
 hidden3_layer_nodes = 500
-output_layer_nodes = 9
+output_layer_nodes = 7
 
 cost_history = np.empty(shape=[0], dtype=np.float32)
 model_path = "./Model"
+filename = 'balanced_data.npy'
 
-# Read data from CSV file to DataFrame variable and convert its data type to int32
-data = pd.read_csv('data.csv', index_col=0)
-data = data.astype('int')
-data = data.reset_index(drop=True)
-data = data.T.reset_index(drop=True).T
+training_data = list(np.load(filename))
+x_data = [x[0] for x in training_data]
+y_data = [x[1] for x in training_data]
 
-x_data = data.iloc[:, :-output_layer_nodes].values
-y_data = data.iloc[:, -output_layer_nodes:].values
+x_data = np.array(x_data, dtype=np.float32)
+y_data = np.array(y_data, dtype=np.float32)
 
-x_data = x_data.astype(np.float32)
-y_data = y_data.astype(np.float32)
-
-# Shuffling data
-x_data, y_data = shuffle(x_data, y_data)
 
 # Splitting 80/20 of the data to be train/test data
 train_X, test_X, train_Y, test_Y = train_test_split(x_data, y_data, test_size=0.20, random_state=675)
@@ -112,20 +104,16 @@ for epoch in range(total_epochs):
     accuracy = sess.run(accuracy, feed_dict={X: train_X, Y: train_Y})
     accuracy_history.append(accuracy)
 
-    print('Epoch:', epoch, 'Cost:', cost, 'MSE:', mse_, 'Accuracy:', accuracy)
+    print('Epoch:', epoch, 'Cost:', cost, 'MSE:', mse_, 'Accuracy:', accuracy * 100, '%')
 
 save_path = saver.save(sess, model_path)
 print("Model saved in {}".format(save_path))
+
+np.save('mse_data.npy', mse_history)
+np.save('accuracy_data.npy', accuracy_history)
 
 plt.plot(mse_history, 'r-')
 plt.show()
 plt.plot(accuracy_history, 'b-')
 plt.show()
 sess.close()
-# correct_prediction = tf.equal(tf.argmax(hypothesis, axis=1), tf.argmax(Y))
-# accuracy = tf.reduce_mean(tf.cast(correct_prediction, dtype=tf.float32))
-# print('Final Test Accuracy:', sess.run(accuracy, feed_dict={X: test_X, Y: test_Y}))
-#
-# prediction_y = sess.run(hypothesis, feed_dict={X: test_X})
-# mse = tf.reduce_mean(tf.square(prediction_y - test_Y))
-# print('Final MSE:', sess.run(mse))
