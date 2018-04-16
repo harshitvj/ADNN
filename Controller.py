@@ -1,8 +1,8 @@
 from directkeys import PressKey, ReleaseKey, W, A, S, D
 
 
-#        [A, W, D, S, AW, DW, NothingPressed]
-#        [0, 1, 2, 3,  4,  5,  6]
+#        [A, W, D, AW, DW]
+#        [0, 1, 2, 3, 4]
 
 class Controller:
     @staticmethod
@@ -23,11 +23,6 @@ class Controller:
             ReleaseKey(D)
             ReleaseKey(W)
         elif op == 3:
-            PressKey(S)
-            ReleaseKey(A)
-            ReleaseKey(D)
-            ReleaseKey(W)
-        elif op == 4:
             PressKey(A)
             PressKey(W)
             ReleaseKey(D)

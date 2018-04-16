@@ -12,7 +12,7 @@ input_layer_nodes = 2208
 hidden1_layer_nodes = 500
 hidden2_layer_nodes = 500
 hidden3_layer_nodes = 500
-output_layer_nodes = 7
+output_layer_nodes = 5
 
 cost_history = np.empty(shape=[0], dtype=np.float32)
 model_path = "./Model"

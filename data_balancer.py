@@ -30,7 +30,7 @@ def balance():
     forward_right = []
     no_key = []
 
-    #        [A, W, D, S, AW, DW, No_Key]
+    #        [A, W, D, S, AW, ]
 
     for data in training_data:
         img = data[0]

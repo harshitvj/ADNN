@@ -1,19 +1,23 @@
 import time
-import cv2
-import pandas as pd
 from getkeys import key_check, keys_to_output
 from grab_screen import process_image
-import os
 import numpy as np
+from random import shuffle
 
 
 filename = 'training_data.npy'
-if os.path.isfile(filename):
-    training_data = list(np.load(filename))
-    print('Creating New file..')
-else:
-    training_data = []
-    print('Loading previous one..')
+# if os.path.isfile(filename):
+#     training_data = list(np.load(filename))
+#     print('Creating New file..')
+# else:
+#     training_data = []
+#     print('Loading previous one..')
+
+forward = []
+left = []
+right = []
+forward_left = []
+forward_right = []
 
 
 def create_dataset():
@@ -21,32 +25,43 @@ def create_dataset():
         print('In', i)
         time.sleep(1)
 
-    count = 0
-    total = 0
     while True:
         data_vector = process_image().flatten()
         output = keys_to_output(key_check())
 
-        training_data.append([data_vector, output])
+        #           [A, W, D, AW, DW]
+        if output == [1, 0, 0, 0, 0] and len(left) < 5000:
+            left.append([data_vector, output])
+        elif output == [0, 1, 0, 0, 0] and len(forward) < 5000:
+            forward.append([data_vector, output])
+        elif output == [0, 0, 1, 0, 0] and len(right) < 5000:
+            right.append([data_vector, output])
+        elif output == [0, 0, 0, 1, 0] and len(forward_left) < 5000:
+            forward_left.append([data_vector, output])
+        elif output == [0, 0, 0, 0, 1] and len(forward_right) < 5000:
+            forward_right.append([data_vector, output])
+        else:
+            pass
 
-        # Pandas DataFrames for x_data and y_data for Training Data
-        # data = pd.DataFrame()
-        # dfx = pd.DataFrame(data_vector)
-        # dfy = pd.DataFrame(output)
+        print('Left:', len(left), 'Forward:', len(forward), 'Right:', len(right),
+              'Forward_left', len(forward_left), 'Forward_right:', len(forward_right))
+        if len(left) == len(forward) == len(right) == len(forward_left) == len(forward_right) == 5000:
+            shuffle(left)
+            shuffle(forward)
+            shuffle(right)
+            shuffle(forward_left)
+            shuffle(forward_left)
 
-        # dfz = pd.concat([dfx,dfy])
-        # data = pd.concat([data,dfz], axis=1)
-        # data = pd.concat([data, pd.concat([dfx, dfy])], axis=1)
-        # data.T.to_csv('data_new.csv', mode='a', header=False)
+            print('Saving..')
+            np.save('left.npy', left)
+            np.save('forward.npy', forward)
+            np.save('right.npy', right)
+            np.save('forward_left.npy', forward_left)
+            np.save('forward_right.npy', forward_right)
 
-        count += 1
-        if count % 500 == 0:
-            total += 500
-            count = 0
-            print('total frames grabbed : {}'.format(total))
+            training_data = left + forward + right + forward_left + forward_right
+            shuffle(training_data)
             np.save(filename, training_data)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
 

@@ -13,7 +13,7 @@ input_layer_nodes = 2208
 hidden1_layer_nodes = 500
 hidden2_layer_nodes = 500
 hidden3_layer_nodes = 500
-output_layer_nodes = 9
+output_layer_nodes = 5
 
 model_path = "./Model"
 
