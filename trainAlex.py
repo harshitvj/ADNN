@@ -6,7 +6,7 @@ training_data = np.load('training_data.npy')
 WIDTH = 96
 HEIGHT = 23
 LR = 1e-3
-EPOCHS = 2
+EPOCHS = 8
 
 x_data = [x[0] for x in training_data]
 y_data = [x[1] for x in training_data]

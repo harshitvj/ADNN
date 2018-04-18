@@ -17,7 +17,6 @@ model.load(MODEL_PATH)
 
 
 def main():
-    last_time = time.time()
     for i in range(5, 0, -1):
         print(i)
         time.sleep(1)
@@ -30,7 +29,6 @@ def main():
             # last_time = time.time()
             screen = process_image()
             prediction = model.predict([screen.reshape(96, 23, 1)])[0]
-            print(prediction)
 
             output = np.argmax(prediction)
             if output == 0 and prediction[0] < 0.80:
@@ -40,10 +38,23 @@ def main():
             kb = Controller()
             kb.act(output)
 
+            if output == 0:
+                print('Left')
+            elif output == 1:
+                print('Forward')
+            elif output == 2:
+                print('Right')
+            elif output == 3:
+                print('Forward_left')
+            elif output == 4:
+                print('Forward_right')
+            else:
+                print('wut?')
+
         keys = key_check()
 
         # p pauses game and can get annoying.
-        if 'T' in keys:
+        if 'P' in keys:
             if paused:
                 paused = False
                 time.sleep(1)

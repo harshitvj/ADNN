@@ -3,7 +3,8 @@ from Controller import Controller
 from grab_screen import process_image
 import tensorflow as tf
 import numpy as np
-
+from getkeys import key_check
+from directkeys import ReleaseKey, W, A, D
 
 # Defining Parameters
 total_epochs = 50
@@ -70,12 +71,26 @@ for i in range(5, 0, -1):
     print('Test Run in ', i)
     time.sleep(1)
 
+paused = False
 while True:
-    data_vector = process_image().flatten()
-    data_vector = np.float32(data_vector)
+    if not paused:
+        data_vector = process_image().flatten()
+        data_vector = np.float32(data_vector)
 
-    prediction = tf.argmax(hypothesis, axis=1)
-    kb = Controller()
-    prediction = sess.run(prediction, feed_dict={X: data_vector.reshape(1, 2208)})[0]
-    print(prediction)
-    kb.act(prediction)
+        prediction = tf.argmax(hypothesis, axis=1)
+        kb = Controller()
+        prediction = sess.run(prediction, feed_dict={X: data_vector.reshape(1, 2208)})[0]
+        print(prediction)
+        kb.act(prediction)
+
+    keys = key_check()
+    if 'P' in keys:
+        if paused:
+            paused = False
+            time.sleep(1)
+        else:
+            paused = True
+            ReleaseKey(A)
+            ReleaseKey(W)
+            ReleaseKey(D)
+            time.sleep(1)

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 # Defining Parameters
 total_epochs = 500
-learning_rate = 0.06
+learning_rate = 0.03
 
 input_layer_nodes = 2208
 hidden1_layer_nodes = 500

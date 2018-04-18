@@ -11,29 +11,23 @@ class Controller:
             PressKey(A)
             ReleaseKey(W)
             ReleaseKey(D)
-            ReleaseKey(S)
         elif op == 1:
             PressKey(W)
             ReleaseKey(A)
             ReleaseKey(D)
-            ReleaseKey(S)
         elif op == 2:
             PressKey(D)
             ReleaseKey(A)
-            ReleaseKey(D)
             ReleaseKey(W)
         elif op == 3:
             PressKey(A)
             PressKey(W)
             ReleaseKey(D)
-            ReleaseKey(S)
-        elif op == 5:
-            PressKey(W)
+        elif op == 4:
             PressKey(D)
+            PressKey(W)
             ReleaseKey(A)
-            ReleaseKey(S)
         else:
             ReleaseKey(W)
             ReleaseKey(A)
-            ReleaseKey(S)
             ReleaseKey(D)
